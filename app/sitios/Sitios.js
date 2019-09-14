@@ -1,7 +1,7 @@
 import React, { Component } from 'reactn';
-import { View, Text, Alert, ScrollView, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Text, Alert, ScrollView, ToastAndroid, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Button } from 'react-native-elements';
 
 
 class Sitios extends React.Component {
@@ -17,6 +17,7 @@ class Sitios extends React.Component {
 
     this.ini = this.ini.bind(this);
     this.saveData = this.saveData.bind(this);
+    this.saveSitioFavorito = this.saveSitioFavorito.bind(this);
     this.ini();
 
   }
@@ -43,6 +44,28 @@ class Sitios extends React.Component {
       params : {sitioSelected : JSON.parse(JSON.stringify(sitio))}
     });
     this.props.navigation.dispatch(navigateAction);
+
+  }
+
+  async saveSitioFavorito(favorito){
+
+    try {
+
+      console.log('test');
+
+      let favoritos = await AsyncStorage.getItem('sitiosFavoritos');
+      if(favoritos != null){
+        favoritos = JSON.parse(favoritos);
+        favoritos.push(favorito);
+        await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify(favoritos));
+
+      }else{
+        await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify([favorito]));
+      }
+      ToastAndroid.show('Sitio agregado exitosamente', ToastAndroid.SHORT);
+    } catch (error) {
+      ToastAndroid.show('Error: ' + error, ToastAndroid.SHORT);
+    }
 
   }
 
@@ -83,7 +106,7 @@ class Sitios extends React.Component {
           this.state.list.map(
             (l) => (
               <ListItem key={l} leftAvatar={{ source: { uri: l.photo } }} onPress={this.navigateToScreen('detalleSitio', l)}
-                key={l.id} title={l.name} />
+            key={l.id} subtitle={<Button title='Agregar Favoritos' onPress={()=>{this.saveSitioFavorito(l)}}/>} title={l.name}  />
             )
           )
         }

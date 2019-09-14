@@ -1,7 +1,7 @@
 import React, { Component } from 'reactn';
 import { View, Text, Image, StyleSheet, Button, TextInput, ToastAndroid, ScrollView } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { Rating } from 'react-native-elements';
+import { Rating, ListItem } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
 
 const stylesImgLogo = StyleSheet.create({
@@ -48,7 +48,7 @@ class DetalleSitio extends React.Component {
 
   getComentarios() {
 
-    fetch(this.state.rute+'comentarios/1', {
+    fetch(this.state.rute+'comentarios/'+this.sitioSelected.id, {
       method: 'GET'
     })
       .then(function (response) {
@@ -64,7 +64,7 @@ class DetalleSitio extends React.Component {
 
   saveComentario(){
 
-    fetch(this.state.rute+'/sitios', {
+    fetch(this.state.rute+'/comentarios', {
       method: 'GET'
     })
       .then(function (response) {

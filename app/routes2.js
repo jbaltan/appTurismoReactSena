@@ -1,5 +1,6 @@
 import {DrawerNavigator} from 'react-navigation';
 import Sitios from './sitios/Sitios';
+import Favoritos from './Favoritos/Favoritos';
 import Eventos from './eventos/Eventos';
 import DetalleSitio from './DetalleSitio/DetalleSitio';
 import CrearSitio from './crearSitio/CrearSitio';
@@ -35,6 +36,9 @@ export default DrawerNavigator({
   },
   camara : {
     screen : Camara
+  },
+  favoritos : {
+    screen : Favoritos
   }
 }, {
   contentComponent: SideMenu,
