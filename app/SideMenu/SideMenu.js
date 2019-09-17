@@ -57,7 +57,7 @@ class SideMenu extends Component {
               <View style={styles.sectionHeadingStyle}>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('sitios')}>Sitios</Text>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('crearSitio')}>Crear Sitio</Text>
-                <Text style={styles.navItemStyle} onPress={this.navigateToScreen('eventos')}>Eventos</Text>
+                {/* <Text style={styles.navItemStyle} onPress={this.navigateToScreen('eventos')}>Eventos</Text> */}
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('sitiosCercanos')}>Encontrar Sitios Cercanos</Text>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('favoritos')}>Favoritos</Text>
                 <Text style={styles.navItemStyle} onPress={this.closeSession()}>Cerrar sesion</Text>
@@ -77,7 +77,7 @@ class SideMenu extends Component {
               <Text style={styles.navSectionStyle}>Opciones</Text>
               <View style={styles.sectionHeadingStyle}>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('sitios')}>Sitios</Text>
-                <Text style={styles.navItemStyle} onPress={this.navigateToScreen('eventos')}>Eventos</Text>
+                {/* <Text style={styles.navItemStyle} onPress={this.navigateToScreen('eventos')}>Eventos</Text> */}
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('sitiosCercanos')}>Encontrar Sitios Cercanos</Text>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('favoritos')}>Favoritos</Text>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('login')}>Login</Text>

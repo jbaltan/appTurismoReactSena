@@ -51,8 +51,6 @@ class Sitios extends React.Component {
 
     try {
 
-      console.log('test');
-
       let favoritos = await AsyncStorage.getItem('sitiosFavoritos');
       if(favoritos != null){
         favoritos = JSON.parse(favoritos);
@@ -86,8 +84,8 @@ class Sitios extends React.Component {
         });
 
       })
-      .catch((err)=> {
-        Alert.alert('Error', ''+err);
+      .catch((error)=> {
+        ToastAndroid.show('Error: ' + error, ToastAndroid.SHORT);        
         this.saveData(null, false);
       });
   }
