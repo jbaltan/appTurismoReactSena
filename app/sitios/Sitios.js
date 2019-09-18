@@ -1,5 +1,5 @@
 import React, { Component } from 'reactn';
-import { View, Text, Alert, ScrollView, ToastAndroid, AsyncStorage } from 'react-native';
+import { View, Text, Alert, TouchableOpacity, ScrollView, ToastAndroid, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { ListItem, Button } from 'react-native-elements';
 
@@ -22,16 +22,16 @@ class Sitios extends React.Component {
 
   }
 
-  async saveData(data, status){
+  async saveData(data, status) {
 
     try {
-      if(status){
+      if (status) {
         await AsyncStorage.setItem('sitios', JSON.stringify(data));
-      }else{
-        this.setState({list : JSON.parse(await AsyncStorage.getItem('sitios'))});
+      } else {
+        this.setState({ list: JSON.parse(await AsyncStorage.getItem('sitios')) });
       }
     } catch (error) {
-      Alert.alert('Error', ''+error);
+      Alert.alert('Error', '' + error);
     }
   };
 
@@ -41,23 +41,23 @@ class Sitios extends React.Component {
 
     const navigateAction = NavigationActions.navigate({
       routeName: route,
-      params : {sitioSelected : JSON.parse(JSON.stringify(sitio))}
+      params: { sitioSelected: JSON.parse(JSON.stringify(sitio)) }
     });
     this.props.navigation.dispatch(navigateAction);
 
   }
 
-  async saveSitioFavorito(favorito){
+  async saveSitioFavorito(favorito) {
 
     try {
 
       let favoritos = await AsyncStorage.getItem('sitiosFavoritos');
-      if(favoritos != null){
+      if (favoritos != null) {
         favoritos = JSON.parse(favoritos);
         favoritos.push(favorito);
         await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify(favoritos));
 
-      }else{
+      } else {
         await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify([favorito]));
       }
       ToastAndroid.show('Sitio agregado exitosamente', ToastAndroid.SHORT);
@@ -69,7 +69,7 @@ class Sitios extends React.Component {
 
   ini() {
 
-    fetch(this.state.rute+'/sitios', {
+    fetch(this.state.rute + '/sitios', {
       method: 'GET'
     })
       .then(function (response) {
@@ -84,8 +84,8 @@ class Sitios extends React.Component {
         });
 
       })
-      .catch((error)=> {
-        ToastAndroid.show('Error: ' + error, ToastAndroid.SHORT);        
+      .catch((error) => {
+        ToastAndroid.show('Error: ' + error, ToastAndroid.SHORT);
         this.saveData(null, false);
       });
   }
@@ -93,21 +93,23 @@ class Sitios extends React.Component {
   render() {
 
     return (
-      <View style={{ padding: 50 }}>
-        <Text>
+      <View style={{ padding: 5 }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color : 'navy' }}>
           Sitios Turisticos
         </Text>
 
-        <ScrollView>
-
-        {
-          this.state.list.map(
-            (l) => (
-              <ListItem key={l} leftAvatar={{ source: { uri: l.photo } }} onPress={this.navigateToScreen('detalleSitio', l)}
-            key={l.id} subtitle={<Button title='Agregar Favoritos' onPress={()=>{this.saveSitioFavorito(l)}}/>} title={l.name}  />
-            )
-          )
-        }
+        <ScrollView style={{ width: '100%', marginBottom : 80 }}>
+          <View>
+            {
+              this.state.list.map(
+                (l) => (
+                  <ListItem key={l} leftAvatar={{ source: { uri: l.photo } }} onPress={this.navigateToScreen('detalleSitio', l)}
+                    key={l.id} subtitle={<View style={{flex : 1, flexDirection : 'column'}}><Text>{l.info}</Text>
+                    <TouchableOpacity style={{width : '50%', height : 45, flex : 1, alignItems : "center", justifyContent : 'center', backgroundColor : 'navy', borderRadius : 23, marginTop : 10}} onPress={() => { this.saveSitioFavorito(l) }}><Text style={{color : 'white'}}>Agregar a Favoritos</Text></TouchableOpacity></View>} title={<Text style={{fontWeight : 'bold'}}>{l.name}</Text>} />
+                )
+              )
+            }
+          </View>
         </ScrollView>
 
       </View>

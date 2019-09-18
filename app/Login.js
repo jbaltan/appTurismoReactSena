@@ -57,7 +57,7 @@ export default class Login extends React.Component {
         <Text>Inicio de Sesión</Text>
 
         <TextInput placeholder='Usuario' value={this.state.name} onChangeText={(e) => this.setState({ user: e })}></TextInput>
-        <TextInput placeholder='Clave' value={this.state.name} onChangeText={(e) => this.setState({ pass: e })}></TextInput>
+        <TextInput autoCapitalize='none' autoCorrect={false} secureTextEntry={this.state.hidden} placeholder='Clave' value={this.state.name} onChangeText={(e) => this.setState({ pass: e })}></TextInput>
 
         <Button title="Seguir" onPress={this.onValidate}></Button>
 
