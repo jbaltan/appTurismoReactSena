@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat'; // 0.3.0
-import Fire from '../class/Fire';
+import { Text, TextInput, ToastAndroid, Image, TouchableOpacity, StyleSheet, Button, View, ScrollView } from 'react-native';
+import Fire from './Fire';
 
 export class Chat extends Component {
   

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-import ExpandPerimeter from './components/expandPerimeter';
 
 const url = "http://especializacionsena.appspot.com";
 
@@ -17,20 +16,10 @@ export default class SitiosCercanosView extends Component {
             latitudeDelta: 10,
             longitudeDelta: 10,
             data: [],
-            PerimetreNear: 2000,
-            coords:{}
+            PerimetreNear:2000
         }
     }
-    // function getDistance(p1, p2) {
-    //     rad = x => x * Math.PI / 180;
-    //     var R = 6378137; //radio de la tierra en metros
-    //     var dLat = rad(p2.latitude - p1.latitude);
-    //     var dLong = rad(p2.longitude - p1.longitude);
-    //     var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(rad(p1.latitude)) * Math.cos(rad(p2.latitude)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
-    //     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    //     var d = R * c;
-    //     return d;
-    //   }
+
     getDelta(latitudCentro, longitudeCentro, latitudNoreste, latitudSureste) {
         const { width, height } = Dimensions.get('window');
         const ASPECT_RATIO = width / height;
@@ -44,6 +33,7 @@ export default class SitiosCercanosView extends Component {
 
         return { "latDelta": latDelta, "lngDelta": lngDelta };
     }
+
     getLatNortheastSouthwest(lat, long) {
         var delta = {};
         fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyBRTNdWi2Vx2VPRkLFMDgmQYQACOT1urnE")
@@ -62,17 +52,15 @@ export default class SitiosCercanosView extends Component {
         console.log('consultando sitios...');
         const response = await fetch(url + '/sitios');
         const dataSites = await response.json();
-        let siteNear = dataSites.info.filter(site => {
-            // alert(this.state.PerimetreNear);
+        siteNear = dataSites.info.filter(site => { 
             site.coords = JSON.parse(site.coords);
-            return this.getDistance(site.coords, coords) < this.state.PerimetreNear;
+            return this.getDistance(site.coords,coords) < this.state.PerimetreNear;
         });
-        // alert(JSON.stringify(siteNear));
-        this.setState({ data: siteNear });
-
+        this.setState({data:siteNear}); 
+        
     }
     getDistance(p1, p2) {
-        try {
+        try{
             rad = x => x * Math.PI / 180;
             var R = 6378137; //radio de la tierra en metros
             var dLat = rad(p2.latitude - p1.latitude);
@@ -81,10 +69,10 @@ export default class SitiosCercanosView extends Component {
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             var d = R * c;
             return d;
-        } catch (e) {
+        }catch(e) {
             return ''.e;
         }
-
+        
     }
 
 
@@ -96,22 +84,6 @@ export default class SitiosCercanosView extends Component {
                 style={styles.container}>
                 <View style={styles.container_text}>
                     <Text style={styles.text_header}>Encontrar sitios en el Maps</Text>
-                </View>
-                <View style={styles.container_text}>
-                    <ExpandPerimeter
-                        style={styles.text_header}
-                        valuePerimetreNear={this.state.PerimetreNear}
-                        decrease={() => {
-                            this.setState(prevState => {
-                                return { PerimetreNear: prevState.PerimetreNear - 500 }
-                            }, () => { this.getSitesNear(this.state.coords) })
-                        }}
-                        increase={() => {
-                            this.setState(prevState => {
-                                return { PerimetreNear: prevState.PerimetreNear + 500 }
-                            }, () => { this.getSitesNear(this.state.coords) })
-                        }}
-                    />
                 </View>
                 <MapView
                     style={styles.map}
@@ -140,7 +112,7 @@ export default class SitiosCercanosView extends Component {
                             key={marker.id}
                             title={marker.name}
                             coordinate={marker.coords}
-                            description={marker.info}
+                            description={ marker.info }
                         />
                     ))}
                 </MapView>
@@ -148,7 +120,7 @@ export default class SitiosCercanosView extends Component {
                     disabled={this.state.gettingPosition}
                     style={styles.button_findme}
                     onPress={() => {
-                        // console.log(this.state.data);
+                        console.log(this.state.data);
                         this.setState({ gettingPosition: true })
                         console.log('ubicando....');
                         Geolocation.getCurrentPosition(
@@ -167,7 +139,6 @@ export default class SitiosCercanosView extends Component {
                                         this.setState({ latitudeDelta: delta.latDelta });
                                         this.setState({ longitudeDelta: delta.lngDelta })
                                         //get sites near
-                                        this.setState({ coords: info.coords });
                                         this.getSitesNear(info.coords);
 
                                     })

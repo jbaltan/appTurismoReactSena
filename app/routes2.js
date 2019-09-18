@@ -8,6 +8,7 @@ import Camara from './camara/Camara';
 import SitiosCercanosView from './SitiosCercanosView';
 import Mapa from './mapa/Mapa';
 import SideMenu from './SideMenu/SideMenu';
+import IniChat from './Chat/IniChat';
 import Login from './Login';
 import setGlobal from 'reactn';
 import GlobalState from './global';
@@ -39,6 +40,8 @@ export default DrawerNavigator({
   },
   favoritos : {
     screen : Favoritos
+  },chat  : {
+    screen : IniChat
   }
 }, {
   contentComponent: SideMenu,

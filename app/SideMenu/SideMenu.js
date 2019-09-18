@@ -21,7 +21,8 @@ class SideMenu extends Component {
 
   navigateToScreen = (route) => () => {
     const navigateAction = NavigationActions.navigate({
-      routeName: route
+      routeName: route,
+      params : {isIni : true}
     });
     this.props.navigation.dispatch(navigateAction);
   }
@@ -60,6 +61,7 @@ class SideMenu extends Component {
                 {/* <Text style={styles.navItemStyle} onPress={this.navigateToScreen('eventos')}>Eventos</Text> */}
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('sitiosCercanos')}>Encontrar Sitios Cercanos</Text>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('favoritos')}>Favoritos</Text>
+                <Text style={styles.navItemStyle} onPress={this.navigateToScreen('chat')}>Chat</Text>
                 <Text style={styles.navItemStyle} onPress={this.closeSession()}>Cerrar sesion</Text>
               </View>
             </View>
@@ -81,6 +83,7 @@ class SideMenu extends Component {
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('sitiosCercanos')}>Encontrar Sitios Cercanos</Text>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('favoritos')}>Favoritos</Text>
                 <Text style={styles.navItemStyle} onPress={this.navigateToScreen('login')}>Login</Text>
+                <Text style={styles.navItemStyle} onPress={this.navigateToScreen('chat')}>Chat</Text>
               </View>
             </View>
           </ScrollView>
