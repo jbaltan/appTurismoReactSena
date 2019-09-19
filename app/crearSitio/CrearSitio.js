@@ -13,7 +13,7 @@ export default class CrearSitio extends React.Component {
         this.state = {
             iconCamara: 'https://previews.123rf.com/images/alexwhite/alexwhite1504/alexwhite150401564/38397120-cámara-icono-plana-roja.jpg',
             iconGallery: 'https://img.icons8.com/cotton/2x/gallery.png',
-            url: "http://10.5.21.177:8080/sitios/upload",
+            url: "http://especializacionsena.appspot.com/sitios/upload",
             name: "",
             info: "",
             photo: null,
