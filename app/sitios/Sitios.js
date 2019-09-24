@@ -94,18 +94,31 @@ class Sitios extends React.Component {
 
     return (
       <View style={{ padding: 5 }}>
-        <Text style={{ fontSize: 30, fontWeight: 'bold', color : 'navy' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'navy' }}>
           Sitios Turisticos
         </Text>
 
-        <ScrollView style={{ width: '100%', marginBottom : 80 }}>
+        <ScrollView style={{ width: '100%', marginBottom: 80 }}>
           <View>
             {
               this.state.list.map(
                 (l) => (
-                  <ListItem key={l} leftAvatar={{ source: { uri: l.photo } }} onPress={this.navigateToScreen('detalleSitio', l)}
-                    key={l.id} subtitle={<View style={{flex : 1, flexDirection : 'column'}}><Text>{l.info}</Text>
-                    <TouchableOpacity style={{width : '50%', height : 45, flex : 1, alignItems : "center", justifyContent : 'center', backgroundColor : 'navy', borderRadius : 23, marginTop : 10}} onPress={() => { this.saveSitioFavorito(l) }}><Text style={{color : 'white'}}>Agregar a Favoritos</Text></TouchableOpacity></View>} title={<Text style={{fontWeight : 'bold'}}>{l.name}</Text>} />
+                  <ListItem
+                    key={l}
+                    leftAvatar={{ source: { uri: l.photo } }}
+                    onPress={this.navigateToScreen('detalleSitio', l)}
+                    key={l.id}
+                    subtitle={
+                      <View style={{ flex: 1, flexDirection: 'column', borderBottomWidth: .5, borderStyle: 'solid', borderBottomColor: 'gray', paddingBottom: 8 }}>
+                        <Text>{l.info}</Text>
+                        <TouchableOpacity
+                          style={{ width: '50%', height: 45, flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: 'navy', borderRadius: 23, marginTop: 10 }}
+                          onPress={() => { this.saveSitioFavorito(l) }}>
+                          <Text style={{ color: 'white' }}>Agregar a Favoritos</Text>
+                        </TouchableOpacity>
+                      </View>}
+                    title={<Text style={{ fontWeight: 'bold' }}>{l.name}</Text>}
+                  />
                 )
               )
             }
