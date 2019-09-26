@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-
+import Notificaciones from '../Notificaciones';
 class Fire {
 
   constructor() {
@@ -79,6 +79,8 @@ class Fire {
         timestamp: this.timestamp,
       };
       this.append(message);
+      Notificaciones.notificar(`Nuevo mensaje de ${message.user.name}`,message.text);
+      console.log(message);
     }
   };
 
