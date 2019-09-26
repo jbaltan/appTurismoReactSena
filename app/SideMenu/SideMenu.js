@@ -88,7 +88,7 @@ class SideMenu extends Component {
             </View>
           </ScrollView>
           <View style={styles.footerContainer}>
-            <Text>Cali-Colombia</Text>
+            <Text style={styles.footerContainerText}>Cali-Colombia</Text>
           </View>
         </View>
       );
