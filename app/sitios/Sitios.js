@@ -86,6 +86,10 @@ class Sitios extends React.Component {
         await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify([favorito]));
       }
       this.isFavorite();
+<<<<<<< HEAD
+=======
+      ToastAndroid.show('Sitio agregado exitosamente', ToastAndroid.SHORT);
+>>>>>>> 145b355559cd48ca38cfbd9f909afbca8c30d4f4
     } catch (error) {
       ToastAndroid.show('Error: ' + error, ToastAndroid.SHORT);
     }
@@ -132,9 +136,13 @@ class Sitios extends React.Component {
   async isFavorite(){
 
     let favoritos = JSON.parse(await AsyncStorage.getItem('sitiosFavoritos'));
+<<<<<<< HEAD
     this.state.labels = [];
 
     if (null != favoritos) {
+=======
+    if (favoritos) {
+>>>>>>> 145b355559cd48ca38cfbd9f909afbca8c30d4f4
       for (const favorito of favoritos) {
         for (const sitio of this.state.sitios) {
           if (sitio.id == favorito.id) {

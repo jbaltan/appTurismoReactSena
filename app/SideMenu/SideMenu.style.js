@@ -1,13 +1,19 @@
 export default {
     container: {
-      paddingTop: 20,
       flex: 1
     },
     navItemStyle: {
-      padding: 10
+      padding: 10,
+      borderBottomWidth: .2,
+      borderStyle: 'solid',
+      borderBottomColor: 'gray'
     },
     navSectionStyle: {
-      backgroundColor: 'lightgrey'
+      padding:20,
+      backgroundColor: 'navy',
+      fontSize:25,
+      fontWeight: 'bold',
+      color:'white'
     },
     sectionHeadingStyle: {
       paddingVertical: 10,
@@ -16,5 +22,9 @@ export default {
     footerContainer: {
       padding: 20,
       backgroundColor: 'lightgrey'
+    },
+    footerContainerText: {
+      color:'navy',
+      fontWeight:'bold'
     }
 };
