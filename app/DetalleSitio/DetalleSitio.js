@@ -23,13 +23,9 @@ class DetalleSitio extends React.Component {
 
     this.getComentarios = this.getComentarios.bind(this);
     this.saveComentario = this.saveComentario.bind(this);
-<<<<<<< HEAD
-    this.ratingCompleted= this.ratingCompleted.bind(this);
-=======
     this.getRatingSite = this.getRatingSite.bind(this);
     this.promedioRating = this.promedioRating.bind(this);
     this.saveRating = this.saveRating.bind(this);
->>>>>>> 145b355559cd48ca38cfbd9f909afbca8c30d4f4
 
   }
 
@@ -191,12 +187,8 @@ class DetalleSitio extends React.Component {
             </Text>
             <View style={styles.containerContentChild}>
               <Text>Estrellas:</Text>
-<<<<<<< HEAD
-              <Rating onFinishRating={this.ratingCompleted} showRating type="star" fractions={1} startingValue={1} imageSize={40} style={{ paddingVertical: 10 }} />
-=======
               <Rating showRating type="star" readonly="true" fractions={1} startingValue={this.promedioRating()} imageSize={40} style={{ paddingVertical: 10 }} />
               <Text> {this.state.calificaciones.length} Calificaciones</Text>
->>>>>>> 145b355559cd48ca38cfbd9f909afbca8c30d4f4
             </View>
 
             <View>
