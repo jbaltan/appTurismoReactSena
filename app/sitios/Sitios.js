@@ -59,15 +59,37 @@ class Sitios extends React.Component {
 
       let favoritos = await AsyncStorage.getItem('sitiosFavoritos');
       if (favoritos != null) {
-        favoritos = JSON.parse(favoritos);
-        favoritos.push(favorito);
-        await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify(favoritos));
 
-      } else {
+        favoritos = JSON.parse(favoritos);
+        let exist = false;
+        let i = 0;
+
+        for (const favoritoTmp of favoritos) {
+          if(favoritoTmp.id == favorito.id){
+            exist = true;
+            break;
+          }
+          i++;
+        }
+
+        if (!exist) {
+          favoritos.push(favorito);
+          await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify(favoritos));
+          ToastAndroid.show('Sitio agregado exitosamente', ToastAndroid.SHORT);
+        }else{
+          favoritos.splice(i, 1);
+          await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify(favoritos));
+          ToastAndroid.show('Sitio removido exitosamente', ToastAndroid.SHORT);
+        }
+
+      }else {
         await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify([favorito]));
       }
       this.isFavorite();
+<<<<<<< HEAD
+=======
       ToastAndroid.show('Sitio agregado exitosamente', ToastAndroid.SHORT);
+>>>>>>> 145b355559cd48ca38cfbd9f909afbca8c30d4f4
     } catch (error) {
       ToastAndroid.show('Error: ' + error, ToastAndroid.SHORT);
     }
@@ -114,7 +136,13 @@ class Sitios extends React.Component {
   async isFavorite(){
 
     let favoritos = JSON.parse(await AsyncStorage.getItem('sitiosFavoritos'));
+<<<<<<< HEAD
+    this.state.labels = [];
+
+    if (null != favoritos) {
+=======
     if (favoritos) {
+>>>>>>> 145b355559cd48ca38cfbd9f909afbca8c30d4f4
       for (const favorito of favoritos) {
         for (const sitio of this.state.sitios) {
           if (sitio.id == favorito.id) {
