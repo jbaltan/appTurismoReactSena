@@ -1,7 +1,7 @@
 import React, { Component } from 'reactn';
 import { View, Text, Alert, TouchableOpacity, ScrollView, ToastAndroid, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { ListItem, Button } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 
 
 class Sitios extends React.Component {
@@ -12,12 +12,18 @@ class Sitios extends React.Component {
 
     this.state = {
       rute: "http://especializacionsena.appspot.com/",
-      list: []
+      list: [],
+      sitios: [],
+      labels: []
     };
 
     this.ini = this.ini.bind(this);
     this.saveData = this.saveData.bind(this);
     this.saveSitioFavorito = this.saveSitioFavorito.bind(this);
+    this.isFavorite = this.isFavorite.bind(this);
+    this.getPosition = this.getPosition.bind(this);
+    this.getValue = this.getValue.bind(this);
+
     this.ini();
 
   }
@@ -53,14 +59,33 @@ class Sitios extends React.Component {
 
       let favoritos = await AsyncStorage.getItem('sitiosFavoritos');
       if (favoritos != null) {
-        favoritos = JSON.parse(favoritos);
-        favoritos.push(favorito);
-        await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify(favoritos));
 
-      } else {
+        favoritos = JSON.parse(favoritos);
+        let exist = false;
+        let i = 0;
+
+        for (const favoritoTmp of favoritos) {
+          if(favoritoTmp.id == favorito.id){
+            exist = true;
+            break;
+          }
+          i++;
+        }
+
+        if (!exist) {
+          favoritos.push(favorito);
+          await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify(favoritos));
+          ToastAndroid.show('Sitio agregado exitosamente', ToastAndroid.SHORT);
+        }else{
+          favoritos.splice(i, 1);
+          await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify(favoritos));
+          ToastAndroid.show('Sitio removido exitosamente', ToastAndroid.SHORT);
+        }
+
+      }else {
         await AsyncStorage.setItem('sitiosFavoritos', JSON.stringify([favorito]));
       }
-      ToastAndroid.show('Sitio agregado exitosamente', ToastAndroid.SHORT);
+      this.isFavorite();
     } catch (error) {
       ToastAndroid.show('Error: ' + error, ToastAndroid.SHORT);
     }
@@ -80,8 +105,10 @@ class Sitios extends React.Component {
         this.saveData(response.info, true);
 
         this.setState({
-          list: response.info
+          sitios : response.info
         });
+
+        this.isFavorite();
 
       })
       .catch((error) => {
@@ -90,7 +117,47 @@ class Sitios extends React.Component {
       });
   }
 
+  getPosition(contador){
+    contador.i = contador.i+1;
+    return contador.i;
+  }
+
+  getValue(valor){
+    if (valor == null) {
+      return 'Agregar a favoritos';
+    }
+    return valor;
+  }
+
+  async isFavorite(){
+
+    let favoritos = JSON.parse(await AsyncStorage.getItem('sitiosFavoritos'));
+    this.state.labels = [];
+
+    if (null != favoritos) {
+      for (const favorito of favoritos) {
+        for (const sitio of this.state.sitios) {
+          if (sitio.id == favorito.id) {
+            this.state.labels.push('Remover a Favoritos');
+            break;
+          }
+        }
+      }
+    }
+
+    this.setState({labels : this.state.labels});
+
+    this.setState({
+      list: this.state.sitios
+    });
+
+  }
+
   render() {
+
+    let contador = {
+      i : -1
+    };
 
     return (
       <View style={{ padding: 5 }}>
@@ -103,6 +170,7 @@ class Sitios extends React.Component {
             {
               this.state.list.map(
                 (l) => (
+
                   <ListItem
                     key={l}
                     leftAvatar={{ source: { uri: l.photo } }}
@@ -114,7 +182,7 @@ class Sitios extends React.Component {
                         <TouchableOpacity
                           style={{ width: '50%', height: 45, flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: 'navy', borderRadius: 23, marginTop: 10 }}
                           onPress={() => { this.saveSitioFavorito(l) }}>
-                          <Text style={{ color: 'white' }}>Agregar a Favoritos</Text>
+                          <Text style={{ color: 'white' }}>{this.getValue(this.state.labels[this.getPosition(contador)])}</Text>
                         </TouchableOpacity>
                       </View>}
                     title={<Text style={{ fontWeight: 'bold' }}>{l.name}</Text>}
