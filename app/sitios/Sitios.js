@@ -132,19 +132,21 @@ class Sitios extends React.Component {
 
   async isFavorite(){
 
+    let labels = [];
+
     let favoritos = JSON.parse(await AsyncStorage.getItem('sitiosFavoritos'));
     if (favoritos) {
       for (const favorito of favoritos) {
         for (const sitio of this.state.sitios) {
           if (sitio.id == favorito.id) {
-            this.state.labels.push('Remover a Favoritos');
+            labels.push('Remover a Favoritos');
             break;
           }
         }
       }
     }
 
-    this.setState({labels : this.state.labels});
+    this.setState({labels : labels});
 
     this.setState({
       list: this.state.sitios
