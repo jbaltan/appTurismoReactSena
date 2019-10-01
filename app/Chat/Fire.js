@@ -45,6 +45,7 @@ class Fire {
   }
 
   get ref() {
+    console.log(34);
     return firebase.database().ref('messages');
   }
 
@@ -58,6 +59,7 @@ class Fire {
       text,
       user,
     };
+    Notificaciones.notificar(`Nuevo mensaje de ${message.user.name}`,message.text);
     return message;
   };
 
@@ -79,7 +81,6 @@ class Fire {
         timestamp: this.timestamp,
       };
       this.append(message);
-      Notificaciones.notificar(`Nuevo mensaje de ${message.user.name}`,message.text);
       console.log(message);
     }
   };
